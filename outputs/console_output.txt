@@ -1,0 +1,126 @@
+
+======================================================================
+  STEP 1 : SALES RECORD PARSING
+======================================================================
+Raw records loaded        : 2402
+Columns                   : ['TransactionID', 'OrderDate', 'Region', 'Category', 'Product', 'UnitPrice', 'UnitsSold', 'Discount', 'StockOnHand']
+Duplicate rows removed    : 2
+Missing values found      : {'TransactionID': 0, 'OrderDate': 0, 'Region': 0, 'Category': 0, 'Product': 0, 'UnitPrice': 0, 'UnitsSold': 3, 'Discount': 1, 'StockOnHand': 0}
+Clean records             : 2400
+Date range                : 2025-01-01 to 2025-12-31
+
+Sample of parsed records:
+TransactionID  OrderDate Region        Category        Product  UnitsSold  Discount Quarter  TotalRevenue
+     TRX-0001 2025-01-01  North       Groceries Cooking Oil 5L         29      0.10      Q1     20,681.90
+     TRX-0002 2025-01-01   West        Clothing          Jeans          8      0.10      Q1     12,096.36
+     TRX-0003 2025-01-01  South       Groceries      Rice 10kg          5      0.10      Q1      2,996.24
+     TRX-0004 2025-01-01  South     Electronics         Laptop          2      0.15      Q1     95,398.49
+     TRX-0005 2025-01-01  North Home Appliances     Air Cooler          4      0.15      Q1     32,014.71
+     TRX-0006 2025-01-02  North       Furniture   Office Chair          2      0.10      Q1     14,099.51
+
+======================================================================
+  STEP 2 : PRODUCT & REGION AGGREGATION
+======================================================================
+Total Revenue             : Rs. 68,951,568.60
+Total Units Sold          : 17,985
+Average Order Value       : Rs. 28,729.82
+Revenue lost to discounts : Rs. 4,431,573.63
+
+Regional Revenue & Market Share:
+        TotalRevenue  MarketShare_%
+Region                             
+North  21,850,180.64          31.69
+West   18,052,307.57          26.18
+South  15,680,941.84          22.74
+East   13,368,138.55          19.39
+
+Category Performance:
+                      Revenue  Units  Orders  Share_%
+Category                                             
+Electronics     32,930,143.12   1697     558    47.76
+Furniture       13,245,450.41    982     341    19.21
+Clothing         9,981,814.16   5109     641    14.48
+Groceries        6,776,329.70   9134     535     9.83
+Home Appliances  6,017,831.21   1063     325     8.73
+
+Top 10 Best-Selling Products (by revenue):
+                                  Revenue  Units
+Category        Product                         
+Electronics     Laptop      20,758,765.70    426
+Furniture       Sofa         8,383,359.26    278
+Electronics     Smartphone   7,988,439.59    475
+Clothing        Jacket       3,894,786.96   1315
+                Saree        3,496,178.36   1426
+Electronics     Smart Watch  3,270,661.42    409
+Groceries       Dry Fruits   2,646,758.47   2389
+Home Appliances Air Cooler   2,550,594.09    304
+                Microwave    2,426,942.86    279
+Clothing        Jeans        1,900,715.17   1131
+
+Quarterly Revenue:
+Quarter
+Q1   14,118,729.75
+Q2   17,853,546.16
+Q3   14,553,765.99
+Q4   22,425,526.70
+
+======================================================================
+  STEP 3 : REVENUE HEATMAP & TREND CHARTS
+======================================================================
+Chart saved -> outputs/01_monthly_trend.png
+Chart saved -> outputs/02_monthly_total.png
+Chart saved -> outputs/03_region_category_heatmap.png
+Chart saved -> outputs/04_region_month_heatmap.png
+Chart saved -> outputs/05_top_products_region_share.png
+Chart saved -> outputs/06_stock_cover.png
+
+Peak month   : Dec (Rs. 8,720,217)
+Lowest month : Aug (Rs. 3,617,418)
+
+======================================================================
+  STEP 4 : RETAIL STRATEGY & STOCKING INSIGHTS
+======================================================================
+Replenishment alerts for low-inventory best-sellers:
+                   CurrentStock  AvgMonthlyDemand  MonthsOfCover  ReorderQty                  Status
+Region Product                                                                                      
+North  Dry Fruits            13             92.33           0.14         126  CRITICAL - Reorder now
+West   Smartphone             5             20.33           0.25          26  CRITICAL - Reorder now
+South  Jacket                20             29.00           0.69          24  CRITICAL - Reorder now
+North  Jacket                61             50.67           1.20          15      LOW - Reorder soon
+South  Dry Fruits            72             56.67           1.27          13      LOW - Reorder soon
+West   Sofa                  12              9.33           1.29           2      LOW - Reorder soon
+       Jacket                57             43.00           1.33           8      LOW - Reorder soon
+North  Smartphone            29             21.67           1.34           4      LOW - Reorder soon
+
+Overstocked SKUs (>6 months cover): 28
+                      CurrentStock  AvgMonthlyDemand  MonthsOfCover
+Region Product                                                     
+East   Air Cooler               97              3.67          26.45
+       Iron                     92             10.00           9.20
+       Microwave                48              1.33          36.00
+       Mixer Grinder            61              6.67           9.15
+       Office Chair             66              4.33          15.23
+       Smart Watch             101              9.33          10.82
+       Smartphone               81              7.67          10.57
+       Sofa                     41              3.33          12.30
+
+Stock status summary:
+Status
+OK                           44
+OVERSTOCK - Run promotion    28
+LOW - Reorder soon            5
+CRITICAL - Reorder now        3
+
+Full table saved -> outputs/stock_recommendations.csv
+Chart saved -> outputs/06_stock_cover.png
+
+======================================================================
+  BUSINESS INSIGHTS SUMMARY
+======================================================================
+1. North is the strongest region (31.7% share); East is the weakest (19.4%).
+2. Electronics generates the most revenue (47.8% of total).
+3. Best-selling product overall: Laptop (Rs. 20,758,766).
+4. Peak month is Dec; Oct+Nov festive season = 19.9% of annual revenue.
+5. 8 best-seller/branch combinations need replenishment before the next peak.
+
+Analysis complete.
